@@ -1,0 +1,54 @@
+name: Go
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ master ]
+
+jobs:
+
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+
+    - name: Set up Go 1.x
+      uses: actions/setup-go@v2
+      with:
+        go-version: ^1.13
+      id: go
+
+    - name: Check out code into the Go module directory
+      uses: actions/checkout@v2
+
+    - name: Get dependencies
+      run: |
+        go get -v -t -d ./...
+        if [ -f Gopkg.toml ]; then
+            curl https://raw.githubusercontent.com/golang/dep/master/install.sh | sh
+            dep ensure
+        fi
+
+    - name: Build
+      run: |
+        go build -v .
+
+    - name: Run animestats
+      run: |
+        ./jecon-template
+
+    - name: Commit jecon.bst
+      run: |
+          if [[ "$(git status --porcelain)" != "" ]]; then
+            echo "===== Detect File Changes ====="
+            git status
+            git config --global user.email "$EMAIL" 
+            git config --global user.name "$GITHUB_ACTOR"
+            git add jecon.bst
+            git commit -m "[Action] Update jecon.bst"
+          fi
+    - name: GitHub Push
+      uses: ad-m/github-push-action@v0.6.0
+      with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: 'gh-pages'

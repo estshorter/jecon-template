@@ -1,0 +1,35 @@
+# \bysame を使うか否か。使わないなら 0、使うなら 0 以外を指定
+# \bysame とは、参考文献部分同じ著者名が連続するときに --- で省略するもの。
+UseBysame = 0
+
+# \bysame の定義。\bysame を使ったときの横棒の形式を変えるには以下の定義を修正
+# する。
+BySameDefinition = "\\hskip.3em \\leavevmode\\rule[.5ex]{2.5em}{.3pt}\\hskip0.5em"
+
+# 日本語文献用の \bysame （\bysamejp）の定義
+# とりあえず英語文献用と同じ定義にしておく。
+BySameDefinitionJP = "\\hskip.3em \\leavevmode\\rule[.5ex]{2.5em}{.3pt}\\hskip0.3em"
+
+# Economics の reference では, first author 名は「姓, 名」の順番で表記し、
+# second author 以下は「名 姓」とするという場合が多いが、これを変更するための関数。
+# Editor にも適用。日本語文献は関係なし。0 か 1 か 2 を選択可。
+# 0: これ普通の経済学風。
+# Fujita, Masahisa, Paul R. Krugman, and Anthony J. Venables. 
+# 1: 全員「姓, 名」のケース。
+# Fujita, Masahisa, Krugman, Paul R., and Venables, Anthony J.
+# 2: 全員「名 姓」のケース。
+# Masahisa Fujita, Paul R. Krugman, and Anthony J. Venables.
+AuthorName = 0
+
+# bibファイルにおける日本人名の記述方法の選択。
+# 
+# 普通のbibファイルではauthorフィールドで日本人名は「author = {姓 名}」という書
+# き方をする。しかし、一部の文献管理ソフト、データベースでは日本人名も外国人名と
+# 同様に「author = {姓, 名}」という形式で扱っている。この関数でどちらの形式で扱
+# うかを決める。editor、yomi、jauthorにも同じ選択が適用されます。詳しくは
+# jecon-sample.pdfを見てください。
+# 
+# 注：ver.5.5からデフォールトの設定を「author = {姓, 名}」に変更しました。
+# 1: (default) → author = {武田, 史郎} or author = {史郎 武田} 
+# 0: 昔からの普通の書き方 → author = {武田 史郎} or author = {史郎, 武田}
+SeiMeiOrder = 1

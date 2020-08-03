@@ -1,0 +1,1 @@
+`configs.toml`を設定ファイルとして`jecon.bst.tmpl`から`jecon.bst`を生成するGoスクリプト。
